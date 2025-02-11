@@ -55,19 +55,12 @@ send_user "\[+]\ Creating an empty pcap file at $file_path\n"
 exec touch $file_path
 
 # # Step 2: Start tcpdump in the background
-# send_user "\[+]\ Starting packet capture... Saving to $file_path\n"
-# spawn sudo tcpdump -i en0 -w $file_path
-
-# TEST: ------>
-# Step 2: Start tcpdump in the background
 send_user "\[+]\ Starting packet capture... Saving to $file_path\n"
-exec nohup sudo tcpdump -i en0 -w $file_path > /dev/null 2>&1 &
-sleep 5
-# spawn nohup sudo tcpdump -i en0 -w $file_path &
+spawn nohup sudo tcpdump -i en0 -w $file_path 
 send_user "\[+]\ Packet capture is now running in the background...\n"
 send_user "\[+]\ Starting file transfer...\n"
 
-# Step 3: SCP file transfer loop every 5 seconds
+# Step 3: SCP file transfer
 while {1} {
     send_user "\[+]\ Attempting packets transfer...\n"
     spawn scp $file_path $username@$ip:/home/$username/Desktop
@@ -86,10 +79,9 @@ while {1} {
         eof
     }
     
-    # Wait 5 seconds before retrying
-    sleep 6
+    # Waiting before retrying
+    sleep 4
 }
-
 
 
 
