@@ -1,2 +1,2 @@
 # machnak
-Traffic sniffer for macOs, for ethical purpose only.
+Traffic sniffer in macOs environment, for ethical purpose only.
